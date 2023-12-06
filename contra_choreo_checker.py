@@ -1,6 +1,6 @@
 from Figure import Figure
 from Dancer import Dancer
-from Dance import Dance
+from Contra_Dance import Contra_Dance
 
 figure_descriptions = {}
 figure_dict = {}
@@ -13,7 +13,7 @@ lark_2 = Dancer('lark', 2, 4)
 minor_set = (raven_1, lark_1, raven_2, lark_2)
 req_final_pos = {raven_1: 4, lark_1: 3, raven_2: 1, lark_2: 2}
 
-curr_dance = Dance()
+curr_dance = Contra_Dance()
 
 help_text = "!!!!!!!!!"
 
@@ -62,7 +62,7 @@ def build_figure_dict() -> None:
 
 
 def list_available_figures():
-    print(f'{str(curr_dance.get_time_remaining)} beats left in the phrase\n')
+    print('Available Figures:')
     for figure_key in figure_dict:
             figure = figure_dict[figure_key]
             if check_timing(figure):
@@ -87,14 +87,30 @@ def check_timing(figure: Figure) -> bool:
 def update_time_remaining(figure: Figure) -> None:
     time_remaining = (curr_dance.get_time_remaining())
     new_time_remaining = time_remaining - figure.get_length()
-    if new_time_remaining == 0:
-        if curr_dance.get_phrase_counter() == 4:
-            finish_dance()
-        else:
-            curr_dance.increment_phrase_counter()
-            new_time_remaining = 32
-            print(f'Now on to Phrase {curr_dance.get_phrase_counter()}')
     curr_dance.set_time_remaining(new_time_remaining)
+
+
+def check_phrase():
+    if curr_dance.get_time_remaining() == 0:
+        if curr_dance.get_phrase_counter() < 4:
+            print(f'\nPhrase {curr_dance.get_phrase_counter()} complete!')
+            print("Your dance so far:")
+            curr_dance.dump() 
+            curr_dance.increment_phrase_counter()
+            curr_dance.set_time_remaining(32)
+            print(f'\nNow on to Phrase {curr_dance.get_phrase_counter()}!')
+        else:
+            print("\nDance Complete!\n")
+            curr_dance.dump()
+
+
+def check_final_position(figure: Figure, dancer) -> int:
+    hold = dancer.get_position()
+    update_position(figure)
+    if dancer.get_position != req_final_pos[dancer]:
+        print(f"Invalid final figure, {dancer.get_name()} in position {dancer.get_position()}, not position {req_final_pos[dancer]}")
+        dancer.set_position(hold)
+        return 1
 
 
 def swap_position(dancer_a: Dancer, dancer_b: Dancer) -> None:
@@ -141,15 +157,6 @@ def get_figure(cmd) -> Figure:
                 return figure_dict[figure]
 
 
-def check_final_position(figure: Figure, dancer) -> int:
-    hold = dancer.get_position()
-    update_position(figure)
-    if dancer.get_position != req_final_pos[dancer]:
-        print(f"Invalid final figure, {dancer.get_name()} in position {dancer.get_position()}, not position {req_final_pos[dancer]}")
-        dancer.set_position(hold)
-        return 1
-
-
 def validate_figure(figure: Figure):
     if check_timing(figure):
         if curr_dance.get_phrase_counter() == 4 and curr_dance.get_time_remaining() - figure.get_length() == 0:
@@ -163,23 +170,17 @@ def validate_figure(figure: Figure):
     else:
         raise ValueError(f'Invalid figure: not enough time left!\n{figure.get_name()} requires {figure.get_length()} beats, but there are only {curr_dance.get_time_remaining()} beats left in the phrase.\nTo see a list of useable figures, type "list figures"\nThese figures are currently available:')
     
-    
-
 
 def add_figure(figure):
     curr_dance.push(figure)
     update_time_remaining(figure)
     print(f"\t{figure.get_name()} added to dance!")
-    print(curr_dance.get_time_remaining)
+    check_phrase()
+    print(f'\n{str(curr_dance.get_time_remaining())} beats still available in the phrase\n')
 
 
 #def delete_figure():
-
-
-def finish_dance():
-    print("Dance Complete!\n")
-    curr_dance.dump()
-
+    
 
 def main():
     print("\n\tWelcome to the Contra Choreo Checker!\n\nLet's make a dance! Select a figure and type it below.")
