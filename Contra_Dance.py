@@ -1,5 +1,5 @@
 class Contra_Dance:
-    def __init__(self, initial_list: list = [], phrase_counter: int = 0, time_remaining: int = 32):
+    def __init__(self, initial_list: list = [], phrase_counter: int = 1, time_remaining: int = 32):
         self.figure_list = initial_list.copy()
         self.phrase_counter = phrase_counter
         self.time_remaining = time_remaining

@@ -94,7 +94,7 @@ def check_phrase():
     if curr_dance.get_time_remaining() == 0:
         if curr_dance.get_phrase_counter() < 4:
             print(f'\nPhrase {curr_dance.get_phrase_counter()} complete!')
-            print("Your dance so far:")
+            print("\nYour dance so far:")
             curr_dance.dump() 
             curr_dance.increment_phrase_counter()
             curr_dance.set_time_remaining(32)
@@ -108,7 +108,7 @@ def check_final_position(figure: Figure, dancer) -> int:
     hold = dancer.get_position()
     update_position(figure)
     if dancer.get_position != req_final_pos[dancer]:
-        print(f"Invalid final figure, {dancer.get_name()} in position {dancer.get_position()}, not position {req_final_pos[dancer]}")
+        print(f"Invalid final figure, {dancer.get_name()} in position {dancer.get_position()}, not position {req_final_pos[dancer]} to progress")
         dancer.set_position(hold)
         return 1
 
