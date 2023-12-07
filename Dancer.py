@@ -12,12 +12,16 @@ class Dancer:
         return self.__role
 
 
-    def get_couple(self)-> int:
+    def get_couple(self) -> int:
         return self.__couple
     
 
-    def get_position(self)-> int:
+    def get_position(self) -> int:
         return self.position
+    
+
+    def get_name(self) -> int:
+        return self.__role + "_" + str(self.__couple)
 
 
     def set_position(self, position):
