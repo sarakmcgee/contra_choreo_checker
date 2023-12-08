@@ -37,5 +37,5 @@ class Contra_Dance:
 
 
     def dump(self):
-        for i in range(1, len(self.figure_list) -1):
+        for i in range(len(self.figure_list)):
             print(str(self.figure_list[i]))

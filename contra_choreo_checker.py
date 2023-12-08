@@ -20,7 +20,7 @@ req_final_pos = {raven_1: 4, lark_1: 3, raven_2: 2, lark_2: 1}
 
 curr_dance = Contra_Dance()
 
-help_text = "!!!!!!!!!"
+help_text = '\nThis contra choreography aid checks the timing of figures to ensure the dance can be neatly divided into four phrases containing 32 beats each.\n\n\tTo see a list of available figures to select, type "list" or "list figures"\n\n\tTo see the figures in the dance so far, type "see dance"\n\n\tTo see the dancers\' current position, type "dancers position" or "dancers" or "positions"\n\n\tTo remove the most recent figure added to the dance, type "remove" or "delete"\n\n\tTo leave the program, type "exit" or "quit"'
 
 def access_figure_descriptions(file_path: str) -> None:
     try:
@@ -90,7 +90,7 @@ def check_timing(figure: Figure) -> bool:
 
 
 def update_time_remaining(figure: Figure) -> None:
-    time_remaining = (curr_dance.get_time_remaining())
+    time_remaining = curr_dance.get_time_remaining()
     new_time_remaining = time_remaining - figure.get_length()
     curr_dance.set_time_remaining(new_time_remaining)
  
@@ -158,7 +158,6 @@ def update_position(figure: Figure) -> None:
 
 
 def get_figure(cmd) -> Figure:
-    cmd = cmd.strip().casefold()
     for figure in figure_dict:
             if cmd == figure_dict[figure].get_name().casefold() or cmd in figure_dict[figure].get_aliases():
                 return figure_dict[figure]
@@ -180,8 +179,8 @@ def get_figure(cmd) -> Figure:
                         return figure_dict["half_hey"]
                     else:
                         hey_length == input('Please type either "half hey" or "full hey".\n').strip().casefold()
-            else:
-                raise ValueError("That figure is not yet available. Please choose from the figures below or type “help” for more options")
+    
+    raise ValueError("That figure is not yet available. Please choose from the figures below or type “help” for more options")
 
 
 def normalize_dancer_input(input: str) -> str:
@@ -228,28 +227,45 @@ def add_figure(figure: Figure):
     update_position(figure)
     print(f"\t{figure.get_name()} added to dance!")
     check_phrase()
-    print(f'\n{str(curr_dance.get_time_remaining())} beats still available in the phrase\n')
+    print(f'\n{str(curr_dance.get_time_remaining())} beats available in the phrase\n')
     for dancer in minor_set:
         print(f"{dancer.get_name()} in position {dancer.get_position()}")
 
 
-#def delete_figure():
-    
+def remove_figure():
+    dance = curr_dance.get_figure_list()
+    figure = dance[-1]
+    update_position(figure)
+    new_time_remaining = curr_dance.get_time_remaining() + figure.get_length()
+    curr_dance.set_time_remaining(new_time_remaining)
+    print(f"\t{figure.get_name()} removed from dance!")
+    curr_dance.pop()
+    print("\nThis dance now contains:")
+    curr_dance.dump()
+    print(f'\n{str(curr_dance.get_time_remaining())} beats available in the phrase\n')
+
 
 def main():
     print("\n\tWelcome to the Contra Choreo Checker!\n\nLet's make a dance! Select a figure and type it below.")
     build_figure_dict()
     while True:
-        cmd = input()
-        if cmd.strip().casefold() == "help":
+        cmd = input().strip().casefold()
+        if cmd == "help":
             print(help_text)
-        elif cmd.strip().casefold() == "exit" or cmd == "quit":
+        elif cmd == "exit" or cmd == "quit":
             break
-        elif cmd.strip().casefold() == 'see dance':
+        elif cmd == 'see dance':
             print()
             curr_dance.dump()
-        elif cmd.strip().casefold() == "list figures" or cmd.strip().casefold() == "list":
+            print("\nSelect your next figure:")
+        elif cmd == "list figures" or cmd == "list":
             list_available_figures()
+        elif cmd == "dancers positions" or cmd == "dancers" or cmd == "dancer positions" or cmd == "dancer" or cmd == "positions":
+            print()
+            for dancer in minor_set:
+                print(f"{dancer.get_name()} in position {dancer.get_position()}")
+        elif cmd == "remove" or cmd == "delete":
+            remove_figure()
         else:
             try:
                 figure = get_figure(cmd)
