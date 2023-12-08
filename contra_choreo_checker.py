@@ -5,13 +5,18 @@ from Contra_Dance import Contra_Dance
 figure_descriptions = {}
 figure_dict = {}
 
+partner_aliases = ["partner", "partners", "p"]
+neighbor_aliases = ["neighbor", "neighbors", "neighbour", "neighbours", "n"]
+lark_aliases = ["lark", "larks", "l", "gents"]
+raven_aliases = ["raven", "ravens", "r", "ladies"]
+
 raven_1 = Dancer('raven', 1, 1)
 lark_1 = Dancer('lark', 1, 2)
 raven_2 = Dancer('raven', 2, 3)
 lark_2 = Dancer('lark', 2, 4)
 
 minor_set = (raven_1, lark_1, raven_2, lark_2)
-req_final_pos = {raven_1: 4, lark_1: 3, raven_2: 1, lark_2: 2}
+req_final_pos = {raven_1: 4, lark_1: 3, raven_2: 2, lark_2: 1}
 
 curr_dance = Contra_Dance()
 
@@ -43,21 +48,21 @@ def build_figure_dict() -> None:
     figure_dict['balance'] = Figure("Balance", 4, 0, figure_descriptions["balance"], "partners")
     figure_dict['box_the_gnat'] = Figure("Box the Gnat", 4, "swap", figure_descriptions["box_the_gnat"], "partners")
     figure_dict['cali_twirl'] = Figure("California Twirl", 4, "swap", figure_descriptions["cali_twirl"], "partners")
-    figure_dict['circle_left'] = Figure("Circle Left", 4, 0, figure_descriptions["circle"], orient = "left")
+    figure_dict['circle_left'] = Figure("Circle Left", 4, 0, figure_descriptions["circle"], "all", "left")
     figure_dict['do_si_so'] = Figure("Do-si-do", 8, 0, figure_descriptions["do_si_do"], "partners")
     figure_dict['eye_turn'] = Figure("Eye Turn", 8, 0, figure_descriptions["eye_turn"], "partners")
-    figure_dict['half_hey'] = Figure("Half Hey", 8, "c_swap", figure_descriptions["half_hey"])
-    figure_dict['full_hey'] = Figure("Hey for Four/Full Hey", 16, 0, figure_descriptions["full_hey"])
+    figure_dict['half_hey'] = Figure("Half Hey", 8, "c_swap", figure_descriptions["half_hey"], "all")
+    figure_dict['full_hey'] = Figure("Hey for Four/Full Hey", 16, 0, figure_descriptions["full_hey"], "all")
     figure_dict['chain'] = Figure("Raven's Chain", 8, "swap", figure_descriptions["chain"], "ravens")
-    figure_dict['long_lines'] = Figure("Long Lines, Forward and Back", 8, 0, figure_descriptions["long_lines"])
-    figure_dict['mad_robin'] = Figure("Mad Robin", 8, 0, figure_descriptions["mad_robin"])
+    figure_dict['long_lines'] = Figure("Long Lines, Forward and Back", 8, 0, figure_descriptions["long_lines"], "all")
+    figure_dict['mad_robin'] = Figure("Mad Robin", 8, 0, figure_descriptions["mad_robin"], "all")
     figure_dict['pass_through'] = Figure("Pass Through", 8, "swap", figure_descriptions["pass_through"], "partners")
-    figure_dict['petronella'] = Figure("Petronella", 8, -2, figure_descriptions["petronella"])
-    figure_dict['promenade'] = Figure("Promenade", 8, "c_swap", figure_descriptions["promenade"])
+    figure_dict['petronella'] = Figure("Petronella", 8, "c_swap", figure_descriptions["petronella"], "all")
+    figure_dict['promenade'] = Figure("Promenade", 8, "c_swap", figure_descriptions["promenade"], "all")
     figure_dict['pull_by'] = Figure("Pull By", 4, "swap", figure_descriptions["pull_by"], "partners")
-    figure_dict['right_left_through'] = Figure("Right and Left Through", 8, "c_swap", figure_descriptions["right_left_through"])
-    figure_dict['star_left'] = Figure("Left Hand Star", 8, 0, figure_descriptions["star"], orient = "left")
-    figure_dict['star_right'] = Figure("Right Hand Star", 8, 0, figure_descriptions["star"], orient = "right")
+    figure_dict['right_left_through'] = Figure("Right and Left Through", 8, "c_swap", figure_descriptions["right_left_through"], "all")
+    figure_dict['star_left'] = Figure("Left Hand Star", 8, 0, figure_descriptions["star"], "all", "left")
+    figure_dict['star_right'] = Figure("Right Hand Star", 8, 0, figure_descriptions["star"], "all", "right")
     figure_dict['swing'] = Figure("Swing", 8, 0, figure_descriptions["swing"], "partners")
 
 
@@ -107,25 +112,27 @@ def check_phrase():
 def check_final_position(figure: Figure, dancer) -> int:
     hold = dancer.get_position()
     update_position(figure)
-    if dancer.get_position != req_final_pos[dancer]:
+    if dancer.get_position() != req_final_pos[dancer]:
         print(f"{dancer.get_name()} in position {dancer.get_position()}, not position {req_final_pos[dancer]} to progress")
         dancer.set_position(hold)
         return 1
+    else: return 0
 
 
 def swap_position(dancer_a: Dancer, dancer_b: Dancer) -> None:
     temp_a = dancer_a.get_position()
     temp_b = dancer_b.get_position()
     dancer_a.set_position(temp_b)
-    dancer_b.set_position(temp_a)    
+    dancer_b.set_position(temp_a)
 
 
 def update_position(figure: Figure) -> None:
     pos_shift = figure.get_pos_shift()
     if pos_shift == 0:
         return
-    dancers = figure.get_dancers()
-    if pos_shift == "swap":
+    
+    elif pos_shift == "swap":
+        dancers = figure.get_dancers()
         if dancers == "partners":
             swap_position(lark_1, raven_1)
             swap_position(lark_2, raven_2)
@@ -146,7 +153,7 @@ def update_position(figure: Figure) -> None:
             temp = dancer.get_position()
             temp = (temp + pos_shift) % 4
             if temp == 0:
-                temp = 4
+                temp = 1
             dancer.set_position(temp)
 
 
@@ -155,17 +162,31 @@ def get_figure(cmd) -> Figure:
             name = figure_dict[figure].get_name()
             if cmd.strip().casefold() == name.casefold():
                 return figure_dict[figure]
+
+
+def normalize_dancer_input(input: str) -> str:
+    if input in partner_aliases:
+        input = "partners"
+    elif input in neighbor_aliases:
+        input = "neighbors"
+    elif input in lark_aliases:
+        input = "larks"
+    elif input in raven_aliases:
+        input = "ravens"
+    return input
             
 
 def set_dancers(figure: Figure):
-    if figure.get_dancers() != None:
+    if figure.get_dancers() != "all":
         if figure.get_name != "Raven's Chain":
-            dancers = input("Who's dancing in this figure? partners, neighbors, ravens or larks?").strip().casefold()
-            if dancers == "partners" or dancers == "neighbors" or dancers == "larks" or dancers == "ravens":
-                figure.set_dancers(dancers)
+            actives = input("Who's dancing together in this figure? partners, neighbors, ravens or larks?\n").strip().casefold()
+            if actives in partner_aliases or actives in neighbor_aliases or actives in lark_aliases or actives in raven_aliases:
+                actives = normalize_dancer_input(actives)
+                figure.set_dancers(actives)
             else:
                 print("Please choose from the options listed.")
                 set_dancers(figure)
+
 
 def check_position(figure: Figure):
     if curr_dance.get_phrase_counter() == 1 and curr_dance.get_time_remaining() - figure.get_length() == 0:
@@ -181,12 +202,15 @@ def check_position(figure: Figure):
         return True
     
 
-def add_figure(figure):
+def add_figure(figure: Figure):
     curr_dance.push(figure)
     update_time_remaining(figure)
+    update_position(figure)
     print(f"\t{figure.get_name()} added to dance!")
     check_phrase()
     print(f'\n{str(curr_dance.get_time_remaining())} beats still available in the phrase\n')
+    for dancer in minor_set:
+        print(f"{dancer.get_name()} in position {dancer.get_position()}")
 
 
 #def delete_figure():
@@ -211,10 +235,12 @@ def main():
                 figure = get_figure(cmd)
                 if figure == None:
                     raise ValueError("That figure is not yet available. Please choose from the figures below or type “help” for more options")
+                
                 if check_timing(figure):
                     set_dancers(figure)
                 else:
                     raise ValueError(f'Invalid figure: not enough time left!\n{figure.get_name()} requires {figure.get_length()} beats, but there are only {curr_dance.get_time_remaining()} beats left in the phrase.\nTo see a list of useable figures, type "list figures"\nThese figures are currently available:')
+                
                 if check_position(figure):
                     add_figure(figure)
                     
@@ -226,6 +252,5 @@ def main():
             except ValueError as error:
                 print(error)
                 list_available_figures()
-
 
 main()
