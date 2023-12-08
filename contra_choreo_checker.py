@@ -43,27 +43,27 @@ def access_figure_descriptions(file_path: str) -> None:
 
 def build_figure_dict() -> None:
     access_figure_descriptions("figure_descriptions.txt")
-    figure_dict['allemande_left'] = Figure("Allemande Left", 8, 0, figure_descriptions["allemande"], "partners", "left")
-    figure_dict['allemande_right'] = Figure("Allemande Right", 8, 0, figure_descriptions["allemande"], "partners", "right")
-    figure_dict['balance'] = Figure("Balance", 4, 0, figure_descriptions["balance"], "partners")
-    figure_dict['box_the_gnat'] = Figure("Box the Gnat", 4, "swap", figure_descriptions["box_the_gnat"], "partners")
-    figure_dict['cali_twirl'] = Figure("California Twirl", 4, "swap", figure_descriptions["cali_twirl"], "partners")
-    figure_dict['circle_left'] = Figure("Circle Left", 4, 0, figure_descriptions["circle"], "all", "left")
-    figure_dict['do_si_so'] = Figure("Do-si-do", 8, 0, figure_descriptions["do_si_do"], "partners")
-    figure_dict['eye_turn'] = Figure("Eye Turn", 8, 0, figure_descriptions["eye_turn"], "partners")
-    figure_dict['half_hey'] = Figure("Half Hey", 8, "c_swap", figure_descriptions["half_hey"], "all")
-    figure_dict['full_hey'] = Figure("Hey for Four/Full Hey", 16, 0, figure_descriptions["full_hey"], "all")
-    figure_dict['chain'] = Figure("Raven's Chain", 8, "swap", figure_descriptions["chain"], "ravens")
-    figure_dict['long_lines'] = Figure("Long Lines, Forward and Back", 8, 0, figure_descriptions["long_lines"], "all")
-    figure_dict['mad_robin'] = Figure("Mad Robin", 8, 0, figure_descriptions["mad_robin"], "all")
-    figure_dict['pass_through'] = Figure("Pass Through", 8, "swap", figure_descriptions["pass_through"], "partners")
-    figure_dict['petronella'] = Figure("Petronella", 8, "c_swap", figure_descriptions["petronella"], "all")
-    figure_dict['promenade'] = Figure("Promenade", 8, "c_swap", figure_descriptions["promenade"], "all")
-    figure_dict['pull_by'] = Figure("Pull By", 4, "swap", figure_descriptions["pull_by"], "partners")
-    figure_dict['right_left_through'] = Figure("Right and Left Through", 8, "c_swap", figure_descriptions["right_left_through"], "all")
-    figure_dict['star_left'] = Figure("Left Hand Star", 8, 0, figure_descriptions["star"], "all", "left")
-    figure_dict['star_right'] = Figure("Right Hand Star", 8, 0, figure_descriptions["star"], "all", "right")
-    figure_dict['swing'] = Figure("Swing", 8, 0, figure_descriptions["swing"], "partners")
+    figure_dict['allemande_left'] = Figure("Allemande Left", 8, 0, figure_descriptions["allemande"], [], "partners", "left")
+    figure_dict['allemande_right'] = Figure("Allemande Right", 8, 0, figure_descriptions["allemande"], [], "partners", "right")
+    figure_dict['balance'] = Figure("Balance", 4, 0, figure_descriptions["balance"], [], "partners")
+    figure_dict['box_the_gnat'] = Figure("Box the Gnat", 4, "swap", figure_descriptions["box_the_gnat"], ["box gnat"], "partners")
+    figure_dict['cali_twirl'] = Figure("California Twirl", 4, "swap", figure_descriptions["cali_twirl"], ["cali twirl", "ca twirl"], "partners")
+    figure_dict['circle_left'] = Figure("Circle Left", 4, 0, figure_descriptions["circle"], ["circle"], "all", "left")
+    figure_dict['do_si_do'] = Figure("Do-si-do", 8, 0, figure_descriptions["do_si_do"], ["do si do", "dosido"], "partners")
+    figure_dict['eye_turn'] = Figure("Eye Turn", 8, 0, figure_descriptions["eye_turn"], ["gypsy", "right shoulder round"], "partners")
+    figure_dict['half_hey'] = Figure("Half Hey", 8, "c_swap", figure_descriptions["half_hey"], ["hey across"], "all")
+    figure_dict['full_hey'] = Figure("Hey for Four/Full Hey", 16, 0, figure_descriptions["full_hey"], ["hey for four", "full hey"], "all")
+    figure_dict['chain'] = Figure("Raven's Chain", 8, "swap", figure_descriptions["chain"], ["chain", "ladies chain", "ladies' chain", "ravens chain"], "ravens")
+    figure_dict['long_lines'] = Figure("Long Lines, Forward and Back", 8, 0, figure_descriptions["long_lines"], ["long lines"], "all")
+    figure_dict['mad_robin'] = Figure("Mad Robin", 8, 0, figure_descriptions["mad_robin"], ["sashay round"], "all")
+    figure_dict['pass_through'] = Figure("Pass Through", 8, "swap", figure_descriptions["pass_through"], [], "partners")
+    figure_dict['petronella'] = Figure("Petronella", 8, "c_swap", figure_descriptions["petronella"], [], "all")
+    figure_dict['promenade'] = Figure("Promenade", 8, "c_swap", figure_descriptions["promenade"], [], "all")
+    figure_dict['pull_by'] = Figure("Pull By", 4, "swap", figure_descriptions["pull_by"], [], "partners")
+    figure_dict['right_left_through'] = Figure("Right and Left Through", 8, "c_swap", figure_descriptions["right_left_through"], ["right and left", "right left through", "right left"], "all")
+    figure_dict['star_left'] = Figure("Left Hand Star", 8, 0, figure_descriptions["star"], ["star by the left", "star left"], "all", "left")
+    figure_dict['star_right'] = Figure("Right Hand Star", 8, 0, figure_descriptions["star"], ["star by the right", "star right"], "all", "right")
+    figure_dict['swing'] = Figure("Swing", 8, 0, figure_descriptions["swing"], [], "partners")
 
 
 def list_available_figures():
@@ -93,11 +93,11 @@ def update_time_remaining(figure: Figure) -> None:
     time_remaining = (curr_dance.get_time_remaining())
     new_time_remaining = time_remaining - figure.get_length()
     curr_dance.set_time_remaining(new_time_remaining)
-
+ 
 
 def check_phrase():
     if curr_dance.get_time_remaining() == 0:
-        if curr_dance.get_phrase_counter() < 4:
+        if curr_dance.get_phrase_counter() <= 2:
             print(f'\nPhrase {curr_dance.get_phrase_counter()} complete!')
             print("\nYour dance so far:")
             curr_dance.dump() 
@@ -158,10 +158,30 @@ def update_position(figure: Figure) -> None:
 
 
 def get_figure(cmd) -> Figure:
+    cmd = cmd.strip().casefold()
     for figure in figure_dict:
-            name = figure_dict[figure].get_name()
-            if cmd.strip().casefold() == name.casefold():
+            if cmd == figure_dict[figure].get_name().casefold() or cmd in figure_dict[figure].get_aliases():
                 return figure_dict[figure]
+            
+            elif cmd == "allemande" or cmd == "star":
+                orient = input("By the right or the left?\n").strip().casefold()
+                while True:
+                    if orient == "right" or orient == "left":
+                        return figure_dict[cmd + "_" + orient]
+                    else:
+                        orient = input('Please type either "right" or "left".\n').strip().casefold()
+            
+            elif cmd == "hey":
+                hey_length = input("Half or Full Hey?\n").strip().casefold()
+                while True:
+                    if hey_length == "full" or "full hey":
+                        return figure_dict["full_hey"]
+                    elif hey_length == "half" or "half hey":
+                        return figure_dict["half_hey"]
+                    else:
+                        hey_length == input('Please type either "half hey" or "full hey".\n').strip().casefold()
+            else:
+                raise ValueError("That figure is not yet available. Please choose from the figures below or type “help” for more options")
 
 
 def normalize_dancer_input(input: str) -> str:
@@ -189,7 +209,7 @@ def set_dancers(figure: Figure):
 
 
 def check_position(figure: Figure):
-    if curr_dance.get_phrase_counter() == 1 and curr_dance.get_time_remaining() - figure.get_length() == 0:
+    if curr_dance.get_phrase_counter() == 2 and curr_dance.get_time_remaining() - figure.get_length() == 0:
         test_counter = 0
         for dancer in minor_set:
             test_counter += check_final_position(figure, dancer)
@@ -233,8 +253,6 @@ def main():
         else:
             try:
                 figure = get_figure(cmd)
-                if figure == None:
-                    raise ValueError("That figure is not yet available. Please choose from the figures below or type “help” for more options")
                 
                 if check_timing(figure):
                     set_dancers(figure)
