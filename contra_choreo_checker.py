@@ -73,8 +73,8 @@ def build_figure_dict() -> None:
     figure_dict['swing'] = Figure("Swing", 8, 0, figure_descriptions["swing"], [], "partners")
 
 
-def list_available_figures():
-    """Prints a list of all figures valid to be added to the dance, checking timing remaining in the phrase and, for the final figure of the dance, also checks final dancer position to ensure they are able to progress.
+def list_available_figures() -> None:
+    """Prints a list of all figures valid to be added to the dance, checking timing remaining in the phrase.
     """
     print('Available Figures:')
     for figure_key in figure_dict:
@@ -99,8 +99,7 @@ def check_timing(figure: Figure) -> bool:
 
 def update_time_remaining(figure: Figure) -> None:
     time_remaining = curr_dance.get_time_remaining()
-    new_time_remaining = time_remaining - figure.get_length()
-    curr_dance.set_time_remaining(new_time_remaining)
+    curr_dance.set_time_remaining(time_remaining - figure.get_length())
  
 
 def check_phrase():
