@@ -87,5 +87,5 @@ class Contra_Dance:
     def dump(self):
         """Prints all figures in the figure list from first to most recently added
         """
-        for i in range(len(self.figure_list)):
-            print(str(self.figure_list[i]))
+        for figure in self.figure_list:
+            print(str(figure))

@@ -1,9 +1,9 @@
 """This program builds a contra dance from a set of choreography figures and verifies that timing and final dancer position for the figures in this dance uphold the structure of a contra.
 """
 
-from Figure import Figure
-from Dancer import Dancer
 from Contra_Dance import Contra_Dance
+from Dancer import Dancer
+from Figure import Figure
 
 figure_descriptions = {}
 figure_dict = {}
@@ -83,7 +83,8 @@ def list_available_figures() -> None:
     print('Available Figures:')
     for figure_key in figure_dict:
         figure = figure_dict[figure_key]
-        print("\t" + figure.get_name())
+        if check_timing(figure):
+            print("\t" + figure.get_name())
 
 def check_timing(figure: Figure) -> bool:
     """Checks if there is enough time left in the current phrase to accommodate a given figure
@@ -94,11 +95,7 @@ def check_timing(figure: Figure) -> bool:
     Returns:
         bool: The truth value of whether or not the length of the given figure can fit within the time remaining in the current phrase 
     """
-    time_remaining = (curr_dance.get_time_remaining())
-    if time_remaining - figure.get_length() >= 0:
-        return True
-    else:
-        return False
+    return (curr_dance.get_time_remaining() - figure.get_length()) >= 0
 
 
 def update_time_remaining(figure: Figure) -> None:
@@ -114,14 +111,13 @@ def update_time_remaining(figure: Figure) -> None:
 def check_phrase() -> None:
     """Transitions between phrases by checking for the end of the current phrase, printing the dance so far, incrementing the phrase counter, and resetting the beats available in the new phrase
     """
-    if curr_dance.get_time_remaining() == 0:
-        if curr_dance.get_phrase_counter() < 2:
-            print(f'\nPhrase {curr_dance.get_phrase_counter()} complete!')
-            print("\nYour dance so far:")
-            curr_dance.dump() 
-            curr_dance.increment_phrase_counter()
-            curr_dance.set_time_remaining(32)
-            print(f'\nNow on to Phrase {curr_dance.get_phrase_counter()}!')
+    if curr_dance.get_time_remaining() == 0 and curr_dance.get_phrase_counter() < 2:
+        print(f'\nPhrase {curr_dance.get_phrase_counter()} complete!')
+        print("\nYour dance so far:")
+        curr_dance.dump() 
+        curr_dance.increment_phrase_counter()
+        curr_dance.set_time_remaining(32)
+        print(f'\nNow on to Phrase {curr_dance.get_phrase_counter()}!')
 
 
 def swap_position(dancer_a: Dancer, dancer_b: Dancer) -> None:
@@ -193,10 +189,7 @@ def check_final_position(figure: Figure) -> bool:
              test_counter += 1
              print(f"{dancer} in position {dancer.get_position()}, not position {req_final_pos[dancer]} to progress")
         dancer.set_position(hold)
-            
-    if test_counter == 0:
-            return True
-    else: return False
+    return test_counter == 0
 
 
 def get_figure(cmd) -> Figure:
@@ -212,26 +205,26 @@ def get_figure(cmd) -> Figure:
         Figure: The Figure object, making it's associated attributes available to subsequent functions for verification
     """
     for figure in figure_dict:
-            if cmd == figure_dict[figure].get_name().casefold() or cmd in figure_dict[figure].get_aliases():
-                return figure_dict[figure]
+        if cmd == figure_dict[figure].get_name().casefold() or cmd in figure_dict[figure].get_aliases():
+            return figure_dict[figure]
+        
+        elif cmd == "allemande" or cmd == "star":
+            orient = input("By the right or the left?\n").strip().casefold()
+            while True:
+                if orient == "right" or orient == "left":
+                    return figure_dict[cmd + "_" + orient]
+                else:
+                    orient = input('Please type either "right" or "left".\n').strip().casefold()
             
-            elif cmd == "allemande" or cmd == "star":
-                orient = input("By the right or the left?\n").strip().casefold()
-                while True:
-                    if orient == "right" or orient == "left":
-                        return figure_dict[cmd + "_" + orient]
-                    else:
-                        orient = input('Please type either "right" or "left".\n').strip().casefold()
-            
-            elif cmd == "hey":
-                hey_length = input("Half or Full Hey?\n").strip().casefold()
-                while True:
-                    if hey_length == "full" or "full hey":
-                        return figure_dict["full_hey"]
-                    elif hey_length == "half" or "half hey":
-                        return figure_dict["half_hey"]
-                    else:
-                        hey_length == input('Please type either "half hey" or "full hey".\n').strip().casefold()
+        elif cmd == "hey":
+            hey_length = input("Half or Full Hey?\n").strip().casefold()
+            while True:
+                if hey_length == "full" or "full hey":
+                    return figure_dict["full_hey"]
+                elif hey_length == "half" or "half hey":
+                    return figure_dict["half_hey"]
+                else:
+                    hey_length == input('Please type either "half hey" or "full hey".\n').strip().casefold()
     
     raise ValueError("That figure is not yet available. Please choose from the figures below or type “help” for more options")
 
