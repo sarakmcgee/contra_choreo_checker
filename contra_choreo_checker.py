@@ -1,4 +1,4 @@
-"""This program builds a contra dance from a set of choreography figures and verifies that timing and final dancer position for the figures in this dance upholds the structure of a contra.
+"""This program builds a contra dance from a set of choreography figures and verifies that timing and final dancer position for the figures in this dance uphold the structure of a contra.
 """
 
 from Figure import Figure
