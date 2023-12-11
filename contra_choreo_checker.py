@@ -206,13 +206,10 @@ def check_final_position(figure: Figure) -> bool:
     test_counter = 0
     update_position(figure)
     for dancer in minor_set:
-        #hold = dancer.get_position()
-        
         if dancer.get_position() != req_final_pos[dancer]:
             test_counter += 1
             print(
                 f"{dancer} in position {dancer.get_position()}, not position {req_final_pos[dancer]} to progress")
-        #dancer.set_position(hold)
     update_position(figure)
     return test_counter == 0
 
