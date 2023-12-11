@@ -1,0 +1,315 @@
+PS C:\Users\sarak\OneDrive\Desktop\Python_Foundations\Contra Final Project\contra_choreo_checker> & C:/Users/sarak/AppData/Local/Microsoft/WindowsApps/python3.11.exe "c:/Users/sarak/OneDrive/Desktop/Python_Foundations/Contra Final Project/contra_choreo_checker/contra_choreo_checker.py"    
+
+        Welcome to the Contra Choreo Checker!
+
+Let's make a dance! Select a figure and type it below.    
+balance
+Who's dancing together in this figure? partners, neighbors, ravens or larks?
+neighbors
+        Balance added to dance!
+
+28 beats available in the phrase
+
+To view the figures in your dance, type "see dance".      
+Otherwise, select your next figure below.
+box the gnat
+Who's dancing together in this figure? partners, neighbors, ravens or larks?
+neighbor
+        Box the Gnat added to dance!
+
+24 beats available in the phrase
+
+
+Select your next figure:
+swing
+Who's dancing together in this figure? partners, neighbors, ravens or larks?
+n
+        Swing added to dance!
+
+16 beats available in the phrase
+
+
+Select your next figure:
+hey
+Half or Full Hey?
+full
+        Hey for Four/Full Hey added to dance!
+
+Phrase 1 complete!
+
+Your dance so far:
+Balance
+Box the Gnat
+Swing
+Hey for Four/Full Hey
+
+Now on to Phrase 2!
+
+32 beats available in the phrase
+
+
+Select your next figure:
+circle left
+        Circle Left added to dance!
+
+28 beats available in the phrase
+
+
+Select your next figure:
+eye turn
+Who's dancing together in this figure? partners, neighbors, ravens or larks?
+partners
+        Eye Turn added to dance!
+
+20 beats available in the phrase
+
+
+Select your next figure:
+swing
+Who's dancing together in this figure? partners, neighbors, ravens or larks?
+p
+        Swing added to dance!
+
+12 beats available in the phrase
+
+
+Select your next figure:
+petronella
+        Petronella added to dance!
+
+4 beats available in the phrase
+
+
+Select your next figure:
+chain
+
+Invalid figure: not enough time left!
+Raven's Chain requires 8 beats, but there are only 4 beats left in the phrase.
+        To see a list of useable figures, type "list figures"
+These figures are currently available:
+Available Figures:
+        Balance
+        Box the Gnat
+        California Twirl
+        Circle Left
+        Pull By
+cali twirl
+Who's dancing together in this figure? partners, neighbors, ravens or larks?
+partners
+        California Twirl added to dance!
+
+Phrase 2 complete!
+
+Your dance so far:
+Balance
+Box the Gnat
+Swing
+Hey for Four/Full Hey
+Circle Left
+Eye Turn
+Swing
+Petronella
+California Twirl
+
+Now on to Phrase 3!
+
+32 beats available in the phrase
+
+
+Select your next figure:
+long lines
+        Long Lines, Forward and Back added to dance!      
+
+24 beats available in the phrase
+
+
+Select your next figure:
+allemande     
+By the right or the left?
+left
+Who's dancing together in this figure? partners, neighbors, ravens or larks?
+larks
+        Allemande Left added to dance!
+
+16 beats available in the phrase
+
+
+Select your next figure:
+mad robin
+        Mad Robin added to dance!
+
+8 beats available in the phrase
+
+
+Select your next figure:
+left hand star
+        Left Hand Star added to dance!
+
+Phrase 3 complete!
+
+Your dance so far:
+Balance
+Box the Gnat
+Swing
+Hey for Four/Full Hey
+Circle Left
+Eye Turn
+Swing
+Petronella
+California Twirl
+Long Lines, Forward and Back
+Allemande Left
+Mad Robin
+Left Hand Star
+
+Now on to Phrase 4!
+
+32 beats available in the phrase
+
+
+Select your next figure:
+half hey
+        Half Hey added to dance!
+
+24 beats available in the phrase
+
+
+Select your next figure:
+right and left through
+        Right and Left Through added to dance!
+
+16 beats available in the phrase
+
+
+Select your next figure:
+do si so
+That figure is not yet available. Please choose from the figures below or type “help” for more options
+Available Figures:
+        Allemande Left
+        Allemande Right
+        Balance
+        Box the Gnat
+        California Twirl
+        Circle Left
+        Do-si-do
+        Eye Turn
+        Half Hey
+        Hey for Four/Full Hey
+        Raven's Chain
+        Long Lines, Forward and Back
+        Mad Robin
+        Pass Through
+        Petronella
+        Promenade
+        Pull By
+        Right and Left Through
+        Left Hand Star
+        Right Hand Star
+        Swing
+do si do
+Who's dancing together in this figure? partners, neighbors, ravens or larks?
+n
+        Do-si-do added to dance!
+
+8 beats available in the phrase
+
+
+Select your next figure:
+allemande
+By the right or the left?
+right
+Who's dancing together in this figure? partners, neighbors, ravens or larks?
+ravens
+raven_1 in position 1, not position 4 to progress
+lark_1 in position 2, not position 3 to progress
+raven_2 in position 3, not position 2 to progress
+lark_2 in position 4, not position 1 to progress
+        Invalid final figure!
+
+8 beats available in the phrase
+
+
+Select your next figure:
+see dance
+
+Balance
+Box the Gnat
+Swing
+Hey for Four/Full Hey
+Circle Left
+Eye Turn
+Swing
+Petronella
+California Twirl
+Long Lines, Forward and Back
+Allemande Left
+Mad Robin
+Left Hand Star
+Half Hey
+Right and Left Through
+Do-si-do
+
+Select your next figure:
+remove
+        Do-si-do removed from dance!
+
+This dance now contains:
+Balance
+Box the Gnat
+Swing
+Hey for Four/Full Hey
+Circle Left
+Eye Turn
+Swing
+Petronella
+California Twirl
+Long Lines, Forward and Back
+Allemande Left
+Mad Robin
+Left Hand Star
+Half Hey
+Right and Left Through
+
+16 beats available in the phrase
+
+circle left
+        Circle Left added to dance!
+
+12 beats available in the phrase
+
+
+Select your next figure:
+do si do
+Who's dancing together in this figure? partners, neighbors, ravens or larks?
+n
+        Do-si-do added to dance!
+
+4 beats available in the phrase
+
+
+Select your next figure:
+pull by
+Who's dancing together in this figure? partners, neighbors, ravens or larks?
+n
+        Pull By added to dance!
+
+Dance Complete!
+
+Balance
+Box the Gnat
+Swing
+Hey for Four/Full Hey
+Circle Left
+Eye Turn
+Swing
+Petronella
+California Twirl
+Long Lines, Forward and Back
+Allemande Left
+Mad Robin
+Left Hand Star
+Half Hey
+Right and Left Through
+Circle Left
+Do-si-do
+Pull By
