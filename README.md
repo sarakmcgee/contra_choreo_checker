@@ -19,12 +19,9 @@ This program can be run from the command line with no arguments. The default use
 Please note, this program must be run with the terminal navigated to the folder which contains the figure descriptions text file, in order to preserve the relative path by which it will be accessed.
 
 ## Installation Instructions
-
 No major requirements, just clone the repository. You will need the program itself (contra_choreo_checker.py), the Contra_Dance, Figure, and Dancer class files and the figure_description text file.
 
 ## Code Review
-Go over key aspects of code in this section. Both link to the file, include snippets in this report (make sure to use the [coding blocks](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)).  Grading wise, we are looking for that you understand your code and what you did.
-
 This program is controlled from the user input loop in main.
 ```while True:
         cmd = input().strip().casefold()
@@ -166,8 +163,6 @@ It would also be valuable to support common fractional figure such as allemande 
 Additionally, it would be great to be able to load in an existing set of figures and save off the completed dance in an output file.
 
 ## Final Reflection
-Write at least a paragraph about your experience in this course. What did you learn? What do you need to do to learn more? Key takeaways? etc.
-
 This course has expanded my base of knowledge, synthesizing previous tech-adjacent experience with foundational concepts to build out more comprehensive competency. The second half of the semester introduced more coordination between components (files, logic, data structures, etc) including defining a recursive relationship within the same function. These next-level considerations allow us to tackle more complex challenges and interact more with the inputs, outputs and errors of the real world.
 
 This project was a fascinating opportunity to see these concepts play out in design decisions. Although I made every mistake in the book at least once, it was exciting to see all the pieces come together and feed information smoothly form one function to another to cover an entire problem space. Of course, the more you consider, the more there is to improve. This attempt was a real lesson in scope and scale, and I'm still trying to figure out how to chunk out effort to incrementally handle increasing complexity.
