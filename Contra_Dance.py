@@ -6,6 +6,7 @@ class Contra_Dance:
         phrase_counter (int): counter to keep track of how many phrases have been composed
         time_remaining (int): number of beats left in the current phrase
     """
+
     def __init__(self, initial_list: list = [], phrase_counter: int = 1, time_remaining: int = 32):
         """Constructs a Contra_Dance object
 
@@ -26,7 +27,7 @@ class Contra_Dance:
             str: The figure list of the dance as a string
         """
         return str(self.figure_list)
-    
+
 
     def get_figure_list(self) -> list:
         """Accesses figure list within Contra_Dance object
@@ -35,7 +36,7 @@ class Contra_Dance:
             list: List of figures within the dance
         """
         return self.figure_list
-    
+
 
     def get_phrase_counter(self) -> int:
         """Accesses phrase counter within Contra_Dance object
@@ -45,7 +46,7 @@ class Contra_Dance:
         """
         return self.phrase_counter
 
-    
+
     def get_time_remaining(self) -> int:
         """Accesses time remaining (i.e. the number of beats left in the current phrase) within Contra_Dance object
 
@@ -53,7 +54,8 @@ class Contra_Dance:
             int: number of beats left in the current phrase
         """
         return self.time_remaining
-    
+
+
     def set_time_remaining(self, time_remaining: int) -> None:
         """Sets time_remaining attribute to a new value
 
@@ -68,7 +70,7 @@ class Contra_Dance:
         """
         self.phrase_counter += 1
 
-   
+
     def push(self, figure) -> None:
         """Adds new figure to the top of the figure_list Stack
 
